@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import CreateCooperatorService from "../services/cooperator/createCooperator.service";
 import IndexCooperatorService from "../services/cooperator/indexCooperator.service";
 import UpdateCooperatorService from "../services/cooperator/updateCooperator.service";
-import listCooperatorService from "../services/cooperator/listCooperator.service";
-import deleteCooperatorService from "../services/cooperator/deleteCooperator.service";
+import ListCooperatorService from "../services/cooperator/listCooperator.service";
+import DeleteCooperatorService from "../services/cooperator/deleteCooperator.service";
+import LoginCooperatorService from "../services/cooperator/loginCooperator.service";
 
 export default class CooperatorController {
   static store = async (request: Request, response: Response) => {
@@ -26,7 +27,7 @@ export default class CooperatorController {
 
   static list = async (request: Request, response: Response) => {
     try {
-      const cooperators = await listCooperatorService.execute();
+      const cooperators = await ListCooperatorService.execute();
       return response.send(cooperators);
     } catch (error) {
       if (error instanceof Error) {
@@ -72,9 +73,23 @@ export default class CooperatorController {
     try {
       const { cooperator_id } = request.params;
 
-      await deleteCooperatorService.execute({ cooperator_id });
+      await DeleteCooperatorService.execute({ cooperator_id });
 
       return response.status(204).json();
+    } catch (error) {
+      if (error instanceof Error) {
+        return response.status(400).json({ error: error.message });
+      }
+    }
+  };
+
+  static login = async (request: Request, response: Response) => {
+    try {
+      const { email, password } = request.body;
+
+      const token = await LoginCooperatorService.execute(email, password);
+
+      return response.status(200).json(token);
     } catch (error) {
       if (error instanceof Error) {
         return response.status(400).json({ error: error.message });

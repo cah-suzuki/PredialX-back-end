@@ -3,7 +3,7 @@ import { ICooperatorId } from "../../interfaces/cooperator";
 import { Cooperator } from "../../entities/cooperator.entity";
 import { AppError } from "../../errors/AppError";
 
-export default class deleteCooperatorService {
+export default class DeleteCooperatorService {
   static execute = async ({ cooperator_id }: ICooperatorId) => {
     const cooperatorRepository = AppDataSource.getRepository(Cooperator);
 

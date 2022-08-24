@@ -14,6 +14,7 @@ export class Cooperator {
   @Column({
     nullable: false,
     length: 50,
+    unique: true,
   })
   email: string;
 
