@@ -4,6 +4,7 @@ const router = Router();
 
 export const cooperatorRouter = () => {
   router.post("", CooperatorController.store);
+  router.post("/login", CooperatorController.login);
   router.get("", CooperatorController.list);
   router.get("/:cooperator_id", CooperatorController.index);
   router.patch("/:cooperator_id", CooperatorController.update);
